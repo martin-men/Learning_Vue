@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@3.4.9/dist/vue.global.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Events</h1>
+    </header>
+    <section id="events">
+      <h2>Events in Action</h2>
+
+      <!-- @ es lo mismo que v-on: -->
+      <button @click="add(5)">Add 5</button>
+      <button v-on:click="reduce(5)">Reduce 5</button>
+      
+      <!-- v-once permite que el elemento renderice una sola vez y no vuelva a hacerlo. -->
+      <p v-once>Starting counter value: {{ counter }}</p>
+      <p>Result: {{ counter }}</p>
+
+      <!-- $event es una sintaxis especial que nos permite acceder al evento que se está produciendo en ese momento. -->
+      <!-- : es lo mismo que v-bind: -->
+      <!-- <input
+        v-bind:value="name"
+        type="text"
+        v-on:input="setName($event)"
+        v-on:keyup.enter="confirmInput" 
+      /> -->
+
+      <!-- v-on:input="setName($event)" y v-bind:value="name" se pueden fusionar en v-model="name". -->
+      <input
+        type="text"
+        v-model="name"
+        v-on:keyup.enter="confirmInput"
+      />
+      <button v-on:click="resetInput">Reset input</button>
+      
+      <!-- Las funciones no son la mejor opción para renderizar contenido dinámico, dado que Vue no conoce qué datos maneja la función y por ende ejecuta todo de nuevo por seguridad. -->
+      <!-- <p>Your name: {{ outputFullName()  }}</p> -->
+
+      <!-- La solución al problema anterior son las propiedades computadas, que son funciones que se usan COMO PROPIEDADES DE DATOS. -->
+      <p>Your name: {{ fullname }}</p>
+      
+      <!-- watcher: watchedProp() -->
+      <p>For the watcher: {{ watchedPropValue }}</p>
+
+      <!-- Para usar modificadores de eventos se usa un punto después del nombre del evento y el modificador después del punto. -->
+      <form v-on:submit.prevent="submitForm">
+        <input type="text" />
+        <button>Sign up</button>
+      </form>
+    </section>
+  </body>
+</html>
