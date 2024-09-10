@@ -12,21 +12,36 @@
           <router-link to="/cart">Cart</router-link>
           <base-badge mode="elegant">{{ cart.qty }}</base-badge>
         </li>
-        <li v-if="isLoggedIn">
+        <li v-if="authorizationState">
           <router-link to="/admin">Admin</router-link>
         </li>
       </ul>
     </nav>
     <div>
-      <button v-if="!isLoggedIn" @click="login">Login</button>
-      <button v-if="isLoggedIn" @click="logout">Logout</button>
+      <button v-if="!authorizationState" @click="login">Login</button>
+      <button v-if="authorizationState" @click="logout">Logout</button>
     </div>
   </header>
 </template>
 
 <script>
 export default {
-  inject: ['isLoggedIn', 'login', 'logout', 'cart'],
+  computed: {
+    cart() {
+      return this.$store.getters.currentCart;
+    },
+    authorizationState() {
+      return this.$store.getters.authorizationState;
+    },
+  },
+  methods: {
+    login() {
+      this.$store.commit('setAuth', { isLoggedIn: true });
+    },
+    logout() {
+      this.$store.commit('setAuth', { isLoggedIn: false });
+    }
+  }
 };
 </script>
 

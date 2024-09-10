@@ -16,14 +16,13 @@
         </div>
       </div>
       <div class="item__total">Total: ${{ itemTotal }}</div>
-      <button @click="remove">Remove</button>
+      <button @click="removeProductFromCart">Remove</button>
     </div>
   </li>
 </template>
 
 <script>
 export default {
-  inject: ['removeProductFromCart'],
   props: ['prodId', 'title', 'image', 'price', 'qty'],
   computed: {
     itemTotal() {
@@ -31,8 +30,8 @@ export default {
     }
   },
   methods: {
-    remove() {
-      this.removeProductFromCart(this.prodId);
+    removeProductFromCart() {
+      this.$store.dispatch('removeProductFromCart', { prodId: this.prodId });
     }
   }
 };
