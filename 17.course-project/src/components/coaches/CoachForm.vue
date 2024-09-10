@@ -1,33 +1,33 @@
 <template>
-    <form>
+    <form @submit.prevent="submitForm()">
         <div class="form-control">
             <label for="firstname">Firstname</label>
-            <input id="firstname" type="text" v-model="firstName">
+            <input id="firstname" type="text" v-model.trim="firstName">
         </div>
         <div class="form-control">
             <label for="lastname">Lastname</label>
-            <input id="lastname" type="text" v-model="lastName">
+            <input id="lastname" type="text" v-model.trim="lastName">
         </div>
         <div class="form-control">
             <label for="description">Description</label>
-            <textarea name="description" id="description" rows="5"></textarea>
+            <textarea name="description" id="description" rows="5" v-model.trim="description"></textarea>
         </div>
         <div class="form-control">
             <label for="rate">Hourly rate</label>
-            <input id="rate" type="number">
+            <input id="rate" type="number" v-model.number="rate">
         </div>
         <div class="form-control">
             <h3>Areas of expertise</h3>
             <div>
-                <input type="checkbox" id="frontend" value="frontend">
+                <input type="checkbox" id="frontend" value="frontend" v-model="areas">
                 <label for="frontend">Frontend development</label>
             </div>
             <div>
-                <input type="checkbox" id="backend" value="backend">
+                <input type="checkbox" id="backend" value="backend" v-model="areas">
                 <label for="backend">Backend development</label>
             </div>
             <div>
-                <input type="checkbox" id="career" value="career">
+                <input type="checkbox" id="career" value="career" v-model="areas">
                 <label for="career">Career advisory</label>
             </div>
         </div>
@@ -45,6 +45,18 @@ export default {
             rate: null,
             areas: []
         }
+    },
+    methods: {
+      submitForm() {
+        const formData = {
+          first: this.firstName,
+          last: this.lastName,
+          description: this.description,
+          rate: this.rate,
+          areas: this.areas
+        }
+        console.log(formData)
+      }
     }
 }
 </script>
