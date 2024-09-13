@@ -1,5 +1,9 @@
 <template>
-  <base-dialog :show="!!error" title="An error occurred!" @close="handleError()">
+  <base-dialog
+    :show="!!error"
+    title="An error occurred!"
+    @close="handleError()"
+  >
     <p>{{ error }}</p>
   </base-dialog>
   <section>
@@ -8,8 +12,16 @@
   <section>
     <base-card>
       <div class="controls">
-        <base-button mode="outline" @click="loadCoaches(true)">Refresh</base-button>
-        <base-button link to="/register" v-if="!isLoading && !isCoach"
+        <base-button mode="outline" @click="loadCoaches(true)"
+          >Refresh</base-button
+        >
+        <base-button link to="/auth?redirect=register" v-if="!isLoggedIn"
+          >Login to register as a coach</base-button
+        >
+        <base-button
+          link
+          to="/register"
+          v-if="isLoggedIn && !isLoading && !isCoach"
           >Register as coach</base-button
         >
       </div>
@@ -70,6 +82,9 @@ export default {
     isCoach() {
       return this.$store.getters['coaches/isCoach'];
     },
+    isLoggedIn() {
+      return this.$store.getters.isAuthenticated;
+    },
   },
   methods: {
     setFilters(updatedFilters) {
@@ -79,7 +94,9 @@ export default {
     async loadCoaches(refresh = false) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch('coaches/loadCoaches', { forceRefresh: refresh });
+        await this.$store.dispatch('coaches/loadCoaches', {
+          forceRefresh: refresh,
+        });
       } catch (error) {
         this.error = error.message || 'Failed to load coaches.';
       }
