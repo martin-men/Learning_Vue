@@ -28,10 +28,10 @@ export default {
   async auth(context, payload) {
     const mode = payload.mode;
     let url =
-      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD09dF3tVI2uGQdvGGF6zAiiFpoyUqI9cU';
+      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=';
     if (mode === 'signup') {
       url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD09dF3tVI2uGQdvGGF6zAiiFpoyUqI9cU';
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=';
     }
 
     const response = await fetch(url, {
