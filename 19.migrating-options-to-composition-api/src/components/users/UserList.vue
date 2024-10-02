@@ -27,29 +27,36 @@
 
 <script setup>
 import UserItem from './UserItem.vue';
+import useSearch from '../../hooks/search';
 
-import { defineProps, computed, watch, ref } from 'vue';
+import { defineProps, computed, ref } from 'vue';
 
 /* PROPS */
 const props = defineProps(['users']);
 
+
+/* HOOKS */
+const users = computed(() => props.users);
+const { enteredSearchTerm, availableItems: availableUsers, updateSearch } = useSearch(users, 'fullName')
+
+
 /* DATA */
-const enteredSearchTerm = ref('');
-const activeSearchTerm = ref('');
+// const enteredSearchTerm = ref('');
+// const activeSearchTerm = ref('');
 const sorting = ref(null);
 
 /* COMPUTED PROPERTIES */
-const availableUsers = computed(() => {
-  let users = [];
-  if (activeSearchTerm.value) {
-    users = props.users.filter((usr) =>
-      usr.fullName.includes(activeSearchTerm.value)
-    );
-  } else if (props.users) {
-    users = props.users;
-  }
-  return users;
-});
+// const availableUsers = computed(() => {
+//   let users = [];
+//   if (activeSearchTerm.value) {
+//     users = props.users.filter((usr) =>
+//       usr.fullName.includes(activeSearchTerm.value)
+//     );
+//   } else if (props.users) {
+//     users = props.users;
+//   }
+//   return users;
+// });
 
 const displayedUsers = computed(() => {
   if (!sorting.value) {
@@ -69,22 +76,22 @@ const displayedUsers = computed(() => {
 });
 
 /* METHODS */
-const updateSearch = (val) => {
-  enteredSearchTerm.value = val;
-};
+// const updateSearch = (val) => {
+//   enteredSearchTerm.value = val;
+// };
 
 const sort = (mode) => {
   sorting.value = mode;
 };
 
 /* WATCHERS */
-watch(enteredSearchTerm, (newVal) => {
-  setTimeout(() => {
-    if (newVal === enteredSearchTerm.value) {
-      activeSearchTerm.value = newVal;
-    }
-  }, 300);
-});
+// watch(enteredSearchTerm, (newVal) => {
+//   setTimeout(() => {
+//     if (newVal === enteredSearchTerm.value) {
+//       activeSearchTerm.value = newVal;
+//     }
+//   }, 300);
+// });
 </script>
 
 <style scoped>
